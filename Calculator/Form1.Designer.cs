@@ -58,20 +58,60 @@ namespace Calculator
 
 
 
-            for (int i = 0; i < 10; i++)
+            /*
+            for (int y = 2; y >= 0; y--)
             {
-                System.Windows.Forms.Button b = new Button();
+                for (int x = 2; x >= 0; x--)
+                {
+                    System.Windows.Forms.Button b = new Button();
+                    b.AutoSize = true;
+                    b.Size = new System.Drawing.Size(40, 40);
+                    b.Location = new System.Drawing.Point(x * 40, y * 40);
+                    b.Name = (x + y * 3) + 1 + "button";
+                    b.TabIndex = (x + y * 3);
+                    b.Text = (x + y * 3) + 1 + "";
+                    b.Anchor = AnchorStyles.Top;
+                    b.Click += new System.EventHandler(button_Click);
+                    Console.WriteLine("Button " + (x + y * 3) + 1 + " created");
+                    Controls.Add(b);
+                }
 
-                b.AutoSize = true;
-                b.Location = new System.Drawing.Point(10, i * 50);
-                b.Name = i + "button";
-                b.TabIndex = i;
-                b.Text = i + "";
-                b.Click += new System.EventHandler(button_Click);
-                Console.WriteLine("Button " + i + " created");
-
-                Controls.Add(b);
             }
+            */
+
+
+            short n = 7;
+            for (int y = 0; y < 3; y++)
+            {
+                for (int x = 0; x < 3; x++)
+                {
+                    System.Windows.Forms.Button b = new Button();
+                    b.AutoSize = true;
+                    b.Size = new System.Drawing.Size(40, 40);
+                    b.Location = new System.Drawing.Point(x * 40, y * 40);
+                    b.Name = n + "button";
+                    b.Text = n + "";
+                    b.Anchor = AnchorStyles.Top;
+                    b.Click += new System.EventHandler(button_Click);
+                    Console.WriteLine("Button " + n + " created");
+
+                    Controls.Add(b);
+                    n++;
+                }
+                n -= 6;
+            }
+
+            System.Windows.Forms.Button b0 = new Button();
+            b0.AutoSize = true;
+            b0.Size = new System.Drawing.Size(40, 40);
+            b0.Location = new System.Drawing.Point(1 * 40, 3 * 40);
+            b0.Name = "0button";
+            b0.Text = "0";
+            b0.Anchor = AnchorStyles.Top;
+            b0.Click += new System.EventHandler(button_Click);
+            Console.WriteLine("Button 0 created");
+
+            Controls.Add(b0);
 
 
 
@@ -86,18 +126,6 @@ namespace Calculator
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
 
-            /*
-            foreach (Button b in numButtons)
-            {
-                Controls.Add(b);
-                Console.WriteLine("Button added");
-            }
-            */
-
-            Controls.Add(numButtons[3]);
-
-            //this.Controls.Add(this.label1);
-            //this.Controls.Add(this.button);
 
             this.Name = "Form1";
             this.Text = "Form1";
@@ -110,11 +138,10 @@ namespace Calculator
 
         //private System.Windows.Forms.Label label1;
         //private System.Windows.Forms.Button button;
-        private System.Windows.Forms.Button[] numButtons = new System.Windows.Forms.Button[10];
 
         private void button_Click(object sender, System.EventArgs e)
         {
-            MessageBox.Show(((Button) sender).Name + " was clicked");
+            MessageBox.Show(((Button)sender).Name + " was clicked");
         }
     }
 }
