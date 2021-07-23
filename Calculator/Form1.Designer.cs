@@ -77,21 +77,19 @@ namespace Calculator
             }
 
 
+            //AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            //AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            ClientSize = new System.Drawing.Size(4 * 80, 5 * 80);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
+            //MinimizeBox = false;
+            StartPosition = FormStartPosition.CenterScreen;
 
 
-
-            // 
-            // Form1
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(4 * 80, 5 * 80);
-
-
-            this.Name = "Calculator";
-            this.Text = "Calculator";
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            Name = "Calculator";
+            Text = "Calculator";
+            ResumeLayout(false);
+            PerformLayout();
 
         }
 
@@ -124,10 +122,16 @@ namespace Calculator
                             l.Text = result + "";
                             break;
                         case '÷':
-                            double res = (double)num1 / (double)num2;
-                            res = Math.Round(res, 10);
-                            Console.WriteLine(res);
-                            l.Text = res + "";
+                            if (num2 != 0)
+                            {
+                                double res = (double)num1 / (double)num2;
+                                res = Math.Round(res, 10);
+                                Console.WriteLine(res);
+                                l.Text = res + "";
+                            } else
+                            {
+                                l.Text = "Err";
+                            }
                             break;
                         default:
                             Console.WriteLine("Hmst");
