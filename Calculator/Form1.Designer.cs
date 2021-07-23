@@ -1,5 +1,7 @@
 ﻿
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace Calculator
@@ -7,6 +9,8 @@ namespace Calculator
     partial class Form1
     {
         private Label l;
+        private int num1, num2;
+        private char operation;
 
         private void InitializeComponent()
         {
@@ -95,6 +99,52 @@ namespace Calculator
         {
             if (((Button)sender).Name.Equals("Cbutton"))
             {
+                l.Text = "";
+            }
+            else if (((Button)sender).Name.Equals("=button"))
+            {
+                try
+                {
+                    num2 = Int32.Parse(l.Text);
+                    switch (operation)
+                    {
+                        case '+':
+                            int result = num1 + num2;
+                            Console.WriteLine(result);
+                            l.Text = result + "";
+                            break;
+                        case '-':
+                            result = num1 - num2;
+                            Console.WriteLine(result);
+                            l.Text = result + "";
+                            break;
+                        case '×':
+                            result = num1 * num2;
+                            Console.WriteLine(result);
+                            l.Text = result + "";
+                            break;
+                        case '÷':
+                            double res = (double)num1 / (double)num2;
+                            res = Math.Round(res, 10);
+                            Console.WriteLine(res);
+                            l.Text = res + "";
+                            break;
+                        default:
+                            Console.WriteLine("Hmst");
+                            break;
+                    }
+                    num1 = Int32.Parse(l.Text);
+                }
+                catch (System.FormatException) { }
+            }
+            else if (((Button)sender).Text.Equals("+") || ((Button)sender).Text.Equals("-") || ((Button)sender).Text.Equals("×") || ((Button)sender).Text.Equals("÷"))
+            {
+                try
+                {
+                    num1 = Int32.Parse(l.Text);
+                }
+                catch (System.FormatException) { }
+                operation = Char.Parse(((Button)sender).Text);
                 l.Text = "";
             }
             else
