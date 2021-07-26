@@ -23,14 +23,13 @@ namespace Calculator
 			GridLayout gl = new GridLayout();
 
 			gl.AddComponent(new Label());
-			//gl.GetComponent(0).Location = new System.Drawing.Point(50, 50);
 			gl.GetComponent(0).Text = "Hello World from x:10 y:10";
 			gl.GetComponent(0).Name = "Test label";
 			gl.GetComponent(0).Click += Test;
 			Controls.Add(gl.GetComponent(0));
 			Console.WriteLine(gl);
 
-			/*
+			
 			l = new Label();
 			l.Location = new System.Drawing.Point(0, 0);
 			l.Size = new System.Drawing.Size(4 * 80, 80);
@@ -91,7 +90,7 @@ namespace Calculator
 
 				Controls.Add(b);
 			}
-			*/
+			
 
 			//AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			//AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
