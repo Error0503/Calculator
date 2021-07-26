@@ -79,6 +79,7 @@ public class GridLayout
 					{
 						components[i].Location = new Point(x * gridWidth, y * gridHeight);
 						components[i].Size = new Size(gridWidth, gridHeight);
+						components[i].TabStop = false;
 					}
 
 				}
