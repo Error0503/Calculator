@@ -3,94 +3,44 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace Calculator
 {
 	partial class Form1
 	{
-		private Label l;
+		private GridLayout gl;
 		private int num1, num2;
 		private char operation;
 
-
-		private void Test(object sender, EventArgs e)
-        {
-			Console.WriteLine("Henlo?");
-        }
-
 		private void InitializeComponent()
 		{
-			GridLayout gl = new GridLayout();
+			gl = new GridLayout(5, 4, 80, 80);
 
 			gl.AddComponent(new Label());
-			gl.GetComponent(0).Text = "Hello World from x:10 y:10";
-			gl.GetComponent(0).Name = "Test label";
-			gl.GetComponent(0).Click += Test;
-			Controls.Add(gl.GetComponent(0));
-			Console.WriteLine(gl);
+			gl.GetComponent(0).Name = "display";
+			gl.GetComponent(0).Size = new Size(4 * 80, 80);
+			gl.GetComponent(0).Text = "";
+			((Label)gl.GetComponent(0)).TextAlign = ContentAlignment.MiddleRight;
+			gl.GetComponent(0).Font = new Font("Arial", 30, FontStyle.Regular);
 
-			
-			l = new Label();
-			l.Location = new System.Drawing.Point(0, 0);
-			l.Size = new System.Drawing.Size(4 * 80, 80);
-			l.Name = "label";
-			l.Text = "";
-			l.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			l.Font = new System.Drawing.Font("Arial", 30, System.Drawing.FontStyle.Regular);
-			Controls.Add(l);
+			gl.AddComponent(new Label());
+			gl.GetComponent(1).Location = new Point(1000, 1000);
+			gl.AddComponent(new Label());
+			gl.GetComponent(2).Location = new Point(1000, 1000);
+			gl.AddComponent(new Label());
+			gl.GetComponent(3).Location = new Point(1000, 1000);
 
-
-			short n = 7;
-			for (int y = 1; y < 4; y++)
+			String[] symbols = { "7", "8", "9", "÷", "4", "5", "6", "×", "1", "2", "3", "-", "C", "0", "=", "+"};
+			for (int i = 0; i < symbols.Length; i++)
 			{
-				for (int x = 0; x < 3; x++)
-				{
-					Button b = new Button();
-					b.AutoSize = true;
-					b.Size = new System.Drawing.Size(80, 80);
-					b.Location = new System.Drawing.Point(x * 80, y * 80);
-					b.Name = n + "button";
-					b.Text = n + "";
-					b.Click += new System.EventHandler(button_Click);
-					Console.WriteLine("Button " + n + " created");
-
-					Controls.Add(b);
-					n++;
-				}
-				n -= 6;
-			}
-
-			String[] symbols = { "C", "0", "=" };
-			for (int x = 0; x < 3; x++)
-			{
-				Button b = new Button();
-				b.AutoSize = true;
-				b.Size = new System.Drawing.Size(80, 80);
-				b.Location = new System.Drawing.Point(x * 80, 4 * 80);
-				b.Name = symbols[x] + "button";
-				b.Text = symbols[x] + "";
-				b.Click += new System.EventHandler(button_Click);
-				Console.WriteLine("Button " + symbols[x] + " created");
-
-				Controls.Add(b);
-			}
-
-
-			String[] symbols2 = { "+", "-", "×", "÷" };
-			for (int y = 1; y < 5; y++)
-			{
-				Button b = new Button();
-				b.AutoSize = true;
-				b.Size = new System.Drawing.Size(80, 80);
-				b.Location = new System.Drawing.Point(3 * 80, y * 80);
-				b.Name = symbols2[y - 1] + "button";
-				b.Text = symbols2[y - 1] + "";
-				b.Click += new System.EventHandler(button_Click);
-				Console.WriteLine("Button " + symbols2[y - 1] + " created");
-
-				Controls.Add(b);
+				gl.AddComponent(new Button());
+				gl.GetComponent(i + 4).Name = symbols[i] + "button";
+				gl.GetComponent(i + 4).Text = symbols[i] + "";
+				gl.GetComponent(i + 4).Click += button_Click;
 			}
 			
+			gl.GetComponents().ForEach(component => Controls.Add(component));
 
 			//AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			//AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -108,33 +58,39 @@ namespace Calculator
 
 		}
 
+		private void Form1_Click(object sender, EventArgs e)
+		{
+			throw new NotImplementedException();
+		}
+
 		private void button_Click(object sender, System.EventArgs e)
 		{
+			
 			if (((Button)sender).Name.Equals("Cbutton"))
 			{
-				l.Text = "";
+				gl.GetComponent(0).Text = "";
 			}
 			else if (((Button)sender).Name.Equals("=button"))
 			{
 				try
 				{
-					num2 = Int32.Parse(l.Text);
+					num2 = Int32.Parse(gl.GetComponent(0).Text);
 					switch (operation)
 					{
 						case '+':
 							int result = num1 + num2;
 							Console.WriteLine(result);
-							l.Text = result + "";
+							gl.GetComponent(0).Text = result + "";
 							break;
 						case '-':
 							result = num1 - num2;
 							Console.WriteLine(result);
-							l.Text = result + "";
+							gl.GetComponent(0).Text = result + "";
 							break;
 						case '×':
 							result = num1 * num2;
 							Console.WriteLine(result);
-							l.Text = result + "";
+							gl.GetComponent(0).Text = result + "";
 							break;
 						case '÷':
 							if (num2 != 0)
@@ -142,17 +98,17 @@ namespace Calculator
 								double res = (double)num1 / (double)num2;
 								res = Math.Round(res, 10);
 								Console.WriteLine(res);
-								l.Text = res + "";
+								gl.GetComponent(0).Text = res + "";
 							} else
 							{
-								l.Text = "Err";
+								gl.GetComponent(0).Text = "Err";
 							}
 							break;
 						default:
 							Console.WriteLine("Hmst");
 							break;
 					}
-					num1 = Int32.Parse(l.Text);
+					num1 = Int32.Parse(gl.GetComponent(0).Text);
 				}
 				catch (System.FormatException) { }
 			}
@@ -160,16 +116,17 @@ namespace Calculator
 			{
 				try
 				{
-					num1 = Int32.Parse(l.Text);
+					num1 = Int32.Parse(gl.GetComponent(0).Text);
 				}
 				catch (System.FormatException) { }
 				operation = Char.Parse(((Button)sender).Text);
-				l.Text = "";
+				gl.GetComponent(0).Text = "";
 			}
 			else
 			{
-				l.Text += ((Button)sender).Text;
+				gl.GetComponent(0).Text += ((Button)sender).Text;
 			}
+			
 		}
 	}
 }

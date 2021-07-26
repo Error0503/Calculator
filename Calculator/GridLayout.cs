@@ -24,9 +24,20 @@ public class GridLayout
 		components.Capacity = rows * cols;
 	}
 
+	public GridLayout(ushort rows, ushort cols, int gridWidth, int gridHeight)
+	{
+		this.rows = rows;
+		this.cols = cols;
+		this.gridWidth = gridWidth;
+		this.gridHeight = gridHeight;
+
+		components = new List<Control>();
+		components.Capacity = rows * cols;
+	}
+
 	public void AddComponent(Control component)
 	{
-		component.Location = new Point(-1, -1);
+		component.Size = new Size(1, 1);
 		components.Add(component);
 	}
 
@@ -58,18 +69,25 @@ public class GridLayout
 	{
 
 		int i = 0;
-        for (int y = 0; y < rows; y++)
-        {
+		for (int y = 0; y < rows; y++)
+		{
 			for (int x = 0; x < cols; x++)
-            {
-				if (components[i].Location.X == -1)
+			{
+				try
 				{
-					components[i].Location = new Point(x * gridWidth, y * gridHeight);
-					components[i].Size = new Size(gridWidth, gridHeight);
+					if (components[i].Size.Width == 1)
+					{
+						components[i].Location = new Point(x * gridWidth, y * gridHeight);
+						components[i].Size = new Size(gridWidth, gridHeight);
+					}
+
 				}
+				catch (NullReferenceException) { }
+				catch (ArgumentOutOfRangeException) { }
 				i++;
-            }
-        }
+			}
+		}
+
 
 		return components;
 	}
