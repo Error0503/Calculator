@@ -61,7 +61,7 @@ namespace Calculator
                         }
                         break;
                 }
-                if (result != int.Parse(display.Text)) display.Text = "Err";
+                if (result != int.Parse(display.Text) && result != 0) display.Text = "Err";
                 num1 = int.Parse(display.Text);
             }
             catch (FormatException) { }
