@@ -35,16 +35,16 @@ namespace Calculator
                 switch (operation)
                 {
                     case '+':
-                        result = num1 + num2;
+                        result = (long)num1 + num2;
                         display.Text = result + "";
                         break;
                     case '-':
-                        result = num1 - num2;
+                        result = (long)num1 - num2;
                         display.Text = result + "";
                         break;
                     case '×':
                     case '*':
-                        result = num1 * num2;
+                        result = (long)num1 * num2;
                         display.Text = result + "";
                         break;
                     case '÷':
@@ -61,7 +61,7 @@ namespace Calculator
                         }
                         break;
                 }
-                if (result > int.MaxValue) display.Text = "Err";
+                if (result != int.Parse(display.Text)) display.Text = "Err";
                 num1 = int.Parse(display.Text);
             }
             catch (FormatException) { }
@@ -92,6 +92,51 @@ namespace Calculator
         private void label1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void Form1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            switch (e.KeyChar)
+            {
+                case (char)Keys.D0:
+                case (char)Keys.D1:
+                case (char)Keys.D2:
+                case (char)Keys.D3:
+                case (char)Keys.D4:
+                case (char)Keys.D5:
+                case (char)Keys.D6:
+                case (char)Keys.D7:
+                case (char)Keys.D8:
+                case (char)Keys.D9:
+                    display.Text += e.KeyChar;
+                    break;
+                case '+':
+                case '-':
+                case '×':
+                case '÷':
+                case '*':
+                case '/':
+                    try
+                    {
+                        num1 = int.Parse(display.Text);
+                    }
+                    catch (FormatException) { }
+                    operation = e.KeyChar;
+                    display.Text = "";
+                    break;
+                case (char)Keys.Back:
+                    if (display.Text.Length > 0) display.Text = display.Text.Remove(display.Text.Length - 1);
+                    break;
+                case (char)Keys.Enter:
+                    EvalButton_Click(null, null);
+                    break;
+            }
+
+        }
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Back && e.Shift) display.Text = "";
         }
 
         private void Form1_Load(object sender, EventArgs e)
